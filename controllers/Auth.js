@@ -55,16 +55,6 @@ module.exports = {
         );
       }
 
-      if (params.password.length < 6) {
-        return ctx.badRequest(
-          null,
-          formatError({
-            id: 'Auth.form.error.password.provide',
-            message: 'Password must be at least 6 characters.',
-          })
-        );
-      }
-
       const query = { provider };
 
       // Check if the provided identifier is an email or not.
@@ -414,6 +404,16 @@ module.exports = {
       );
     }
 
+    if (params.password.length < 6) {
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'Auth.form.error.password.provide',
+          message: 'Password must be at least 6 characters.',
+        })
+      );
+    }
+
     // Email is required.
     if (!params.email) {
       return ctx.badRequest(
@@ -575,8 +575,6 @@ module.exports = {
         user: sanitizedUser,
       });
     } catch (err) {
-      console.log(Object.keys(err));
-      console.log(err);
       const adminError = _.includes(err.message, 'username')
         ? {
             id: 'Auth.form.error.username.taken',
