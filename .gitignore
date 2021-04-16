@@ -12,3 +12,6 @@ actions.json
 .DS_Store
 npm-debug.log
 .idea
+
+# tools
+git-informed.sh
