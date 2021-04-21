@@ -270,7 +270,7 @@ module.exports = {
   },
 
   async forgotPassword(ctx) {
-    let { email } = ctx.request.body;
+    let { email, resetUrl } = ctx.request.body;
 
     // Check if the provided email is valid or not.
     const isEmail = emailRegExp.test(email);
@@ -332,6 +332,7 @@ module.exports = {
       settings.message,
       {
         URL: advanced.email_reset_password,
+        URL: resetUrl || advanced.email_reset_password,
         USER: userInfo,
         TOKEN: resetPasswordToken,
       }
