@@ -346,18 +346,18 @@ module.exports = {
 
     try {
       // Send an email to the user.
+      const emailConfig = strapi.config.get('plugins.email', {});
+      console.log('Settings', settings);
       await strapi.plugins['email'].services.email.send({
         to: user.email,
-        from:
-          settings.from.email || settings.from.name
-            ? `${settings.from.name} <${settings.from.email}>`
-            : undefined,
-        replyTo: settings.response_email,
-        subject: settings.object,
+        from: emailConfig.settings.defaultFrom,
+        replyTo: emailConfig.settings.defaultReplyTo,
+        subject: emailConfig.settings.subjectResetPassword || settings.object,
         text: settings.message,
         html: settings.message,
       });
     } catch (err) {
+      console.error(err);
       return ctx.badRequest(null, err);
     }
 
